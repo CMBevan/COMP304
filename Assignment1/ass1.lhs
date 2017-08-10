@@ -53,9 +53,13 @@ a)
 
 \begin{code}
 
+encode :: [String] -> ([String], [Int]) 
+encode [] = error "Empty List"
+encode list = encode' (encodeToWords list) (encodeToWordsNoDup list)
 
-
-
+-- duplicates -> no duplicates -> number pattern
+encode' :: [String] -> [String] -> ([String], [Int])
+encode' duplicates nonDuplicates = (nonDuplicates, getPositionAll duplicates nonDuplicates [])
 
 getPositionAll:: [String] -> [String] -> [Int] -> [Int]
 getPositionAll [] _ numbers = numbers
@@ -73,7 +77,6 @@ getPlace word list place
 \end{code}
 This code is very similar to question 1 a & b, doesn't care about duplicates
 \begin{code}
---encode :: [Strin] -> ([String], [Int]) 
 
 encodeToWords :: [String] -> [String] 
 encodeToWords [] = error "Empty List"
