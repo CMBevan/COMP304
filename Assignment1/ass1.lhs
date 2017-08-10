@@ -63,12 +63,12 @@ encodeToWords xs = encodeToWords' xs []
 
 encodeToWords' :: [String] -> [String] -> [String] 
 encodeToWords' [] rlist = rlist
-encodeToWords' sList rList = encodeToWords' (tail sList) (rList ++ splitWords (head sList))
+encodeToWords' sList rList = encodeToWords' (tail sList) (splitWords (head sList) rList)
 
-splitWords :: String -> [String]
-splitWords word 
+splitWords :: String -> [String] -> [String]
+splitWords word list
     | length word == 0 = []
-    | otherwise = splitWords' word [] [] 
+    | otherwise = splitWords' word [] list 
 
 splitWords':: String -> [Char] -> [[Char]] -> [[Char]]
 splitWords' [] word list
@@ -78,10 +78,6 @@ splitWords' sentence word list
     | head sentence == ' ' && checkDupl word list /= True = splitWords' (tail sentence) ([]) (list ++ word:[])
     | head sentence == ' ' = splitWords' (tail sentence) ([]) (list) --is duplicate
     | otherwise = splitWords' (tail sentence) (word ++ head sentence:[])  (list)
-
-
-removeDupl :: [String] -> [String]
-removeDupl xs = xs
 
 --true if word is in list
 checkDupl :: String -> [String] -> Bool 
