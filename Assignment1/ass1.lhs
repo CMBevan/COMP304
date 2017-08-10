@@ -45,6 +45,10 @@ linesToWords' sList rList = linesToWords' (tail sList) (rList ++ lineToWords (he
 
 c)
 
+Q2)
+
+a)
+
 
 
 Q3)
