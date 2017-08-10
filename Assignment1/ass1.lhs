@@ -51,11 +51,27 @@ Q3)
 
 a)
 
+\begin{code}
 
-/*get given a list of strings e.g. ["sdaf adsfads asdf", "dasf", "sdfdsf"] 
-and returns the list with no duplicates and the Int positions */
 
-This code is very similar to question 1 a & b but instead checks if the newly formed word is already in our list before adding it
+
+
+
+getPositionAll:: [String] -> [String] -> [Int] -> [Int]
+getPositionAll [] _ numbers = numbers
+getPositionAll sentence list numbers = getPositionAll (tail sentence) list (numbers ++ (getPlace (head sentence) list 1):[])
+
+
+--used to find the place of one element 
+-- word to find -> full list -> position
+getPlace:: String -> [String] -> Int -> Int
+getPlace word [] _ = error "Number Not Found" --end of full list
+getPlace word list place
+    | head list == word = place
+    | otherwise = getPlace word (tail list) (place + 1) 
+
+\end{code}
+This code is very similar to question 1 a & b, doesn't care about duplicates
 \begin{code}
 --encode :: [Strin] -> ([String], [Int]) 
 
@@ -72,14 +88,41 @@ splitWords word list
     | length word == 0 = []
     | otherwise = splitWords' word [] list 
 
-splitWords':: String -> [Char] -> [[Char]] -> [[Char]]
+splitWords':: String -> [Char] -> [String] -> [String]
 splitWords' [] word list
-    | length word > 0 && checkDupl word list /= True =  list ++ word:[]
+    | length word > 0 =  list ++ word:[]
     | otherwise = list
 splitWords' sentence word list
-    | head sentence == ' ' && checkDupl word list /= True = splitWords' (tail sentence) ([]) (list ++ word:[])
+    | head sentence == ' ' = splitWords' (tail sentence) ([]) (list ++ word:[])
     | head sentence == ' ' = splitWords' (tail sentence) ([]) (list) --is duplicate
     | otherwise = splitWords' (tail sentence) (word ++ head sentence:[])  (list)
+
+\end{code}
+
+
+This code is very similar to question 1 a & b but instead checks if the newly formed word is already in our list before adding it
+\begin{code}
+encodeToWordsNoDup :: [String] -> [String] 
+encodeToWordsNoDup [] = error "Empty List"
+encodeToWordsNoDup xs = encodeToWordsNoDup' xs []
+
+encodeToWordsNoDup' :: [String] -> [String] -> [String] 
+encodeToWordsNoDup' [] rlist = rlist
+encodeToWordsNoDup' sList rList = encodeToWordsNoDup' (tail sList) (splitWordsNoDup (head sList) rList)
+
+splitWordsNoDup :: String -> [String] -> [String]
+splitWordsNoDup word list
+    | length word == 0 = []
+    | otherwise = splitWordsNoDup' word [] list 
+
+splitWordsNoDup':: String -> [Char] -> [String] -> [String]
+splitWordsNoDup' [] word list
+    | length word > 0 && checkDupl word list /= True =  list ++ word:[]
+    | otherwise = list
+splitWordsNoDup' sentence word list
+    | head sentence == ' ' && checkDupl word list /= True = splitWordsNoDup' (tail sentence) ([]) (list ++ word:[])
+    | head sentence == ' ' = splitWordsNoDup' (tail sentence) ([]) (list) --is duplicate
+    | otherwise = splitWordsNoDup' (tail sentence) (word ++ head sentence:[])  (list)
 
 --true if word is in list
 checkDupl :: String -> [String] -> Bool 
@@ -87,50 +130,6 @@ checkDupl word [] = False
 checkDupl word list
     | head list == word = True
     | otherwise = checkDupl word (tail list)
-
-\end{code}
-/*This one will go through each string in the list */
-encodeList :: [String] -> 
-
-
-/*gets the position of a string from a list (used after duplicates are removed) */
-getPosition:: String -> [String] -> Int -> Int
-
-
-
-finds the position of a string in a group of strings
-for testing get place >getPlace "test7" ["how", "for", "test", "test7"] 1  
-
-encode:: [String] -> ([String], [Int])
-encode [] = error "empty list" 
---encode s = getOrder (encode s)
-
-encode' :: [String] -> [String]
-encode' s = s
-
-
---go through a list
-
---words to parse -> full list -> positions list
-getOrder' :: [String] -> [String] -> [Int] -> [Int]
-getOrder' [] _ numbers = numbers
-getOrder' word list numbers = getOrder (tail list) (list) ((getOrder' (head list) list 1):[] ++ numbers)
-
-
-\begin{code}
-
-getPositionAll:: [String] -> [String] -> [Int] -> [Int]
-getPositionAll [] _ numbers = numbers
-getPositionAll sentence list numbers = getPositionAll (tail sentence) list (numbers ++ (getPlace (head sentence) list 1):[])
-
-
---used to find the place of one element 
--- word to find -> full list -> position
-getPlace:: String -> [String] -> Int -> Int
-getPlace word [] _ = error "Number Not Found" --end of full list
-getPlace word list place
-    | head list == word = place
-    | otherwise = getPlace word (tail list) (place + 1) 
 
 \end{code}
 
