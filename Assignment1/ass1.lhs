@@ -54,6 +54,8 @@ a)
 
 /*get given a list of strings e.g. ["sdaf adsfads asdf", "dasf", "sdfdsf"] 
 and returns the list with no duplicates and the Int positions */
+
+This code is very similar to question 1 a & b but instead checks if the newly formed word is already in our list before adding it
 \begin{code}
 --encode :: [Strin] -> ([String], [Int]) 
 
@@ -116,6 +118,10 @@ getOrder' word list numbers = getOrder (tail list) (list) ((getOrder' (head list
 
 
 \begin{code}
+
+getPositionAll:: [String] -> [String] -> [Int] -> [Int]
+getPositionAll [] _ numbers = numbers
+getPositionAll sentence list numbers = getPositionAll (tail sentence) list (numbers ++ (getPlace (head sentence) list 1):[])
 
 
 --used to find the place of one element 
