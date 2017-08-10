@@ -49,7 +49,7 @@ c)
 
 Q3)
 
-a)
+
 
 \begin{code}
 
@@ -133,6 +133,24 @@ checkDupl word [] = False
 checkDupl word list
     | head list == word = True
     | otherwise = checkDupl word (tail list)
+
+\end{code}
+
+\begin{code}
+
+decode :: ([String], [Int]) -> String 
+decode (list, numbers) = decode' list numbers []
+
+decode' :: [String] -> [Int] -> String -> String
+decode' _ [] sentence = sentence --base case
+decode' list numbers [] = decode' (list) (tail numbers) (findWord (list)(head numbers))
+decode' list numbers sentence = decode' (list) (tail numbers) (sentence ++ " " ++ findWord (list)(head numbers))
+
+findWord :: [String] -> Int -> String
+findWord [] _ = error "Empty list"
+findWord list pos
+    | pos > length list = error "Out of bounds error"
+    | otherwise = list !! (pos - 1)
 
 \end{code}
 
