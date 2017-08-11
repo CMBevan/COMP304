@@ -1,8 +1,10 @@
 Q1)
 a) 
 lineToWords' uses 3 arguments, first the String we are parsing, second is the current word and lastly a list of the words. 
-
-
+We go through the string given to us one character at a time and add this to our String word which will make up a word.
+when we reach punctuation or white space we add the word to a list of Strings which keeps track of all the words we have seperated.
+We then keep recursively calling the function with an empty list for words (start a new word) and the list of words to keep track of what we have.
+Testing was using the example input and comparing my output to it. 
 \begin{code}
 lineToWords :: String -> [String]
 lineToWords word 
@@ -10,7 +12,6 @@ lineToWords word
     | otherwise = lineToWords' word [] [] 
 
 lineToWords':: String -> [Char] -> [[Char]] -> [[Char]]
---finished parsing sentence
 lineToWords' [] word list
     | length word > 0 =  list ++ word:[]
     | otherwise = list
