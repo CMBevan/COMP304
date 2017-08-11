@@ -29,7 +29,8 @@ lineToWords' sentence word list
 
 \end{code}
 
-
+This part works by going through each of the strings in our list of strings given as the arguments and calls lineToWords from 1) a)
+for each of Strings in the argument while adding the result of each call (a string of lists) to each other to form one long list of strings
 b)
 \begin{code}
 linesToWords :: [String] -> [String] 
@@ -161,7 +162,3 @@ checkDupl word list
     | otherwise = checkDupl word (tail list)
 
 \end{code}
-
-
-
-["the more I learn, the more I know.", "The more I know, the more I forget."] ["The", "more", "I", "learn", "the", "know.", "know,", "forget."] []
