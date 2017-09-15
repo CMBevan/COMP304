@@ -65,7 +65,7 @@ instead of using checkDup functionpreviously defined since that would result in 
 set twice, first to check if there is a duplicate and then to add at the end
 \begin{code}
 add :: (Ord a) => a -> Set a -> Set a
-add x Empty = Value x Empty --empty list given
+--add x Empty = Value x Empty --empty list given
 add x set = add' x set False
 --add to list function
 --add x (Value xs Empty) | xs =
@@ -73,16 +73,23 @@ add x set = add' x set False
 -- value -> List -> found -> return
 add' :: (Ord a) => a -> Set a -> Bool -> Set a 
 
+add' x Empty b 
+    | b == False = Value x Empty
+    | otherwise = Empty
 
+add' x (Value xs next) b
+    | x == xs = Value xs (add' x next True) --equal make true now
+    | otherwise = Value xs (add' x next b)
 
-add' x (Value xs Empty) False
-    | x == xs = (Value xs Empty)
-    | otherwise = Value xs (Value x Empty)
+\end{code}
 
-add' x (Value xs Empty) True = Value xs Empty 
+--add' x (Value xs Empty) False
+  --  | x == xs = (Value xs Empty)
+-- | otherwise = Value xs (Value x Empty)
+
+--add' x (Value xs Empty) True = Value xs Empty 
 
 add' x (Value xs next) b
     | b == True = Value xs (add' x next True)
     | x == xs = Value xs (add' x next True)
     | otherwise = Value xs (add' x next False)
-\end{code}
