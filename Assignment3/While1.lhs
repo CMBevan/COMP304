@@ -116,11 +116,10 @@ Apply an arithmetic operator
 > apply Minus x y = x - y
 > apply Times x y = x * y
 > apply Div x y = x `div` y
-
-My Functions here
-> apply And x y 
->   | x == y = 1
->   | otherwise = 0
+> apply And 0 0 = 0 -- here and below replace 1 & 0 w/ True & False
+> apply And x y = 1
+> apply Not 1 0 = 1
+> apply Not 0 1 = 1
 > apply Not x y = 0
 > apply Or x y = 0
 
@@ -166,5 +165,6 @@ Some sample programs
 > p8 = [Asgn 'i' e1, Asgn 's' e0,
 >	(Do (Cond Lt (Var 'i') (Var 'n')) 
 >	    [Asgn 's' (Bin Plus (Var 's') e1), Asgn 'i' e5])]
-> p9 = [Asgn 'x' (Bin And (Var 'x') (Const 5))]
-> p10 = [Asgn 'z' (Bin And (Var 'x') (Var 'y'))]
+> p9 = [Asgn 'x' (Bin And (Var 'x') (Const 1))]
+> p10 = [Asgn 'x' (Bin And (Const 0 ) (Const 1))]
+> p11 = [Asgn 'z' (Bin And (Var 'x') (Var 'y'))]
